@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!--  -->
+<mapper namespace="Paging">
+
+<!-- ########################페이징 처리를 위한 값######################## -->
+	<sql id="ORA_PREFIX">
+		SELECT	(TOTCNT-RNUM+1) AS PAGENUM
+				,CASE 
+        			WHEN CEIL(TOTCNT / #{itemCount}) > #{page}
+        			THEN 'N'
+        			ELSE 'Y'
+        			END 
+        		AS LAST_YN
+				,P.*
+		FROM	(
+				SELECT	ROWNUM AS RNUM,
+						PAGING.*
+				FROM	(
+	</sql>
+	
+	<sql id="ORA_PREFIX2">
+		SELECT	(TOTCNT-RNUM+1) AS PAGENUM,
+				P.*
+		FROM	(
+				SELECT	ROWNUM AS RNUM,
+						PAGING.*
+				FROM	(
+	</sql>
+	
+	<sql id="ORA_MIDDELFIX">
+						)	PAGING
+				WHERE	ROWNUM &lt;= 
+	</sql>
+	<sql id="ORA_ENDFIX">
+				)	P
+		WHERE	RNUM &gt;
+	</sql>
+	
+	<sql id="MY_PREFIX">
+		SELECT	
+				BB.*
+		FROM
+				(        
+		        SELECT
+		                AA.*										
+		                , FLOOR((ROWNUM-1)/#{itemCount}+1) AS PAGE		
+		        FROM
+		                (       
+						SELECT 	T.*, @ROWNUM := @ROWNUM + 1 AS ROWNUM
+						FROM 	(   
+	</sql>
+	<sql id="MY_ENDFIX">    
+						) T
+						, ( SELECT @ROWNUM := 0 )R
+						)AA
+				) BB
+		WHERE
+				PAGE = #{page}
+	</sql>
+	<sql id="MY_LIMITFIX">    
+		LIMIT #{START_PAGE}, #{itemCount}
+	</sql>
+	
+	<sql id="MS_PREFIX">
+		SELECT	*
+		FROM	(
+	</sql>
+	<sql id="MS_MIDDELFIX">
+				) PAGING
+		WHERE	PAGING.RNUM BETWEEN 
+	</sql>    
+	<sql id="MS_ENDFIX">
+				AND 
+	</sql>    
+	
+	
+	
+</mapper>

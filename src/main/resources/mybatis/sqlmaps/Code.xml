@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="social.network.uptempo.batch.mapper.CodeMapper">
+	<sql id="TABLENAME">tb_code</sql>
+	
+	<!-- category code add -->
+    <insert id="categoryAdd" parameterType="EData">
+    	<selectKey order="BEFORE" keyProperty="nextDepth" resultType="int">
+    		SELECT DEPTH+1 FROM <include refid="TABLENAME"/> WHERE ID = #{parent_id}
+    	</selectKey>
+		INSERT INTO <include refid="TABLENAME"/>
+		(
+			ID
+			,PARENT_ID
+			,DEPTH
+			,CODE_NAME
+			,CODE_VALUE
+			,DESCRIPTION
+			,ORDER
+			,INSERT_ID
+			,INSERT_DATE
+			,UPDATE_ID
+			,UPDATE_DATE
+		)
+		VALUES
+		(
+			#{id}
+			,#{parent_id}
+			,#{nextDepth}
+			,#{code_name}
+			,#{code_value}
+			,#{description}
+			,#{order}
+			,#{insert_id}
+			,NOW()
+			,#{update_id}
+			,NOW()
+		)
+		ON DUPLICATE KEY UPDATE
+			PARENT_ID = #{parent_id}
+			,DEPTH = #{nextDepth}
+			,CODE_NAME = #{code_name}
+			,CODE_VALUE = #{code_value}
+			,DESCRIPTION = #{description}
+			,ORDER = #{order}
+			,UPDATE_ID = #{update_id}
+			,UPDATE_DATE = NOW()
+    </insert>
+    
+
+    
+    <select id="tiktokCategoryList" parameterType="EData" resultType="EData">
+		SELECT	tc.ID
+				,tc.PARENT_ID
+				,tc.CODE_NAME
+				,tc.CODE_VALUE
+				,tc.DEPTH
+		FROM	<include refid="TABLENAME"/> tc 
+				,<include refid="TABLENAME"/> tc2 
+		WHERE	tc2.PARENT_ID = 13
+		AND		tc2.ID = tc.PARENT_ID
+    </select>
+    <select id="tiktokCategoryBeautyList" parameterType="EData" resultType="EData">
+		SELECT	tc.ID
+				,tc.PARENT_ID
+				,tc.CODE_NAME
+				,tc.CODE_VALUE
+				,tc.DEPTH
+		FROM	<include refid="TABLENAME"/> tc 
+				,<include refid="TABLENAME"/> tc2 
+		WHERE	tc2.PARENT_ID = 13
+		AND		tc2.ID = 601450
+		AND		tc2.ID = tc.PARENT_ID
+    </select>
+    <select id="tiktokCategoryBeautyListUS" parameterType="EData" resultType="EData">
+		SELECT	tc.ID
+				,tc.PARENT_ID
+				,tc.CODE_NAME
+				,tc.CODE_VALUE
+				,tc.DEPTH
+		FROM	<include refid="TABLENAME"/> tc 
+				,<include refid="TABLENAME"/> tc2 
+		WHERE	tc2.PARENT_ID = 21
+		AND		tc2.ID = 601450
+		AND		tc2.ID = tc.PARENT_ID
+    </select>
+    
+    <select id="tiktokCategorySelectList" parameterType="EData" resultType="EData">
+		SELECT	tc.ID
+				,tc.PARENT_ID
+				,tc.CODE_NAME
+				,tc.CODE_VALUE
+				,tc.DEPTH
+		FROM	<include refid="TABLENAME"/> tc 
+				,<include refid="TABLENAME"/> tc2 
+		WHERE	tc2.PARENT_ID = 13
+		AND		tc2.ID = #{selectId}
+		AND		tc2.ID = tc.PARENT_ID
+    </select>
+    
+
+</mapper>

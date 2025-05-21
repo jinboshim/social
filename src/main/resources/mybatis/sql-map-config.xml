@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration>
+	<typeAliases>
+		<typeAlias alias="EData" type="social.network.uptempo.set.data.EData"/>
+	</typeAliases>
+	<plugins>
+		<plugin interceptor="social.network.uptempo.set.db.QueryInterceptor"></plugin>
+	</plugins>
+	<mappers>
+		<mapper resource="mybatis/Paging.xml" />
+		<mapper resource="mybatis/Table.xml" />
+		<package name="mybatis.sqlmaps" />
+	</mappers>
+	
+</configuration>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/context		http://www.springframework.org/schema/context/spring-context.xsd
+				http://www.springframework.org/schema/tx			http://www.springframework.org/schema/tx/spring-tx.xsd
+				http://www.springframework.org/schema/aop			http://www.springframework.org/schema/aop/spring-aop.xsd
+				http://www.springframework.org/schema/util 			http://www.springframework.org/schema/util/spring-util.xsd
+		">
+
+	<context:annotation-config />
+
+	<!-- 외부 설정 파일 위치 -->
+	<context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:application.properties" />
+
+	<bean id="dataSource_mysql" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+		<property name="url" value="${mysql.url}" />
+		<property name="driverClassName" value="${mysql.driverClassName}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
+		<property name="testWhileIdle" value="${mysql.testWhileIdle}"/>
+		<property name="timeBetweenEvictionRunsMillis" value="${mysql.timeBetweenEvictionRunsMillis}"/>
+		<property name="validationQuery" value="${mysql.validationQuery}" />
+		<property name="minIdle" value="${mysql.minIdle}" />
+		<property name="maxIdle" value="${mysql.maxIdle}" />
+		<property name="maxActive" value="${mysql.maxActive}" />
+	</bean>
+	<bean id="sqlMapClient_mysql" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis/sql-map-config.xml" />
+ 		<property name="mapperLocations" value="classpath:mybatis/sqlmaps/*.xml" />
+<!-- 
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mybatis/sqlmaps/table/*.xml</value>
+				<value>classpath:mybatis/sqlmaps/page/*.xml</value>
+			</list>
+		</property>
+--> 		
+		<property name="dataSource" ref="dataSource_mysql" />
+	</bean>
+	<bean id="mysqlCommonDao" class="social.network.uptempo.set.db.SqlMapCommonDao">
+		<property name="sqlSessionFactory" ref="sqlMapClient_mysql"/>
+	</bean>
+	<bean id="txManager_maria" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource_mysql"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager_mysql"/>
+	
+	 
+	<bean id="databaseHandler" class="social.network.uptempo.set.db.DatabaseHandler" autowire="byName" />
+	
+
+</beans>	

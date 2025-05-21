@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="social.network.uptempo.batch.mapper.CategoryMapper">
+	
+	<sql id="TABLENAME">tb_code</sql>
+	
+	<!-- category code add -->
+    <insert id="categoryAdd" parameterType="EData">
+    	<selectKey order="BEFORE" keyProperty="nextDepth" resultType="int">
+    		SELECT DEPTH+1 FROM <include refid="TABLENAME"/> WHERE ID = #{parent_id}
+    	</selectKey>
+		INSERT INTO <include refid="TABLENAME"/>
+		(
+			ID
+			,PARENT_ID
+			,DEPTH
+			,CODE_NAME
+			,CODE_VALUE
+			,DESCRIPTION
+			,ORDERS
+			,INSERT_ID
+			,INSERT_DATE
+			,UPDATE_ID
+			,UPDATE_DATE
+		)
+		VALUES
+		(
+			#{id}
+			,#{parent_id}
+			,#{nextDepth}
+			,#{code_name}
+			,#{code_value}
+			,#{description}
+			,#{order}
+			,#{insert_id}
+			,NOW()
+			,#{update_id}
+			,NOW()
+		)
+		ON DUPLICATE KEY UPDATE
+			PARENT_ID = #{parent_id}
+			,DEPTH = #{nextDepth}
+			,CODE_NAME = #{code_name}
+			,CODE_VALUE = #{code_value}
+			,DESCRIPTION = #{description}
+			,ORDERS = #{order}
+			,UPDATE_ID = #{update_id}
+			,UPDATE_DATE = NOW()
+    </insert>
+    
+
+</mapper>

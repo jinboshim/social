@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="social.network.uptempo.batch.mapper.ScheduleInfoMapper">
+	
+	<sql id="TABLENAME">tb_schedule_info</sql>
+	
+	
+	
+	<select id="getInfo" parameterType="EData" resultType="EData">
+		SELECT	id as ID
+				,info_1 as START_YN
+				,info_2 as SESSIONID
+				,info_3 as START_COUNT
+				,info_4 as NEXT_COUNT
+				,info_5 as MAX_COUNT
+				,info_6 as URL
+				,info_7 as NEXT_STEP
+		FROM	<include refid="TABLENAME"/>
+		WHERE	ID = #{id}
+	</select>
+	
+	
+    <update id="modifyNextCount">
+    	UPDATE <include refid="TABLENAME"/>
+    	SET		info_4 = #{next_count}
+		WHERE	ID = #{ID}
+    </update>
+
+</mapper>

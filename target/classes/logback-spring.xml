@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<logger name="social.network.uptempo" level="info">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<property name="LOGS_ABSOLUTE_PATH" value="/home/uptech/project/influencer/log"/>
+	
+	<property name="LOGBACK_DIRECTORY" value="logback"/>
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_ABSOLUTE_PATH}/${LOGBACK_DIRECTORY}/logback.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/${LOGBACK_DIRECTORY}/%d{yyyyMM,aux}/%d{yyyy-MM-dd}.logback.log</fileNamePattern>
+      		<maxHistory>168</maxHistory>
+        </rollingPolicy>
+    </appender>
+ 	<logger name="social.network.uptempo"  level="info" additivity="false">
+ 		<appender-ref ref="ROLLING" />
+ 	</logger>
+ 	
+    <property name="CONTOLLER_DIRECTORY" value="controller"/>
+    <appender name="ROLLING2" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_ABSOLUTE_PATH}/${CONTOLLER_DIRECTORY}/controller.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/${CONTOLLER_DIRECTORY}/%d{yyyyMM,aux}/%d{yyyy-MM-dd}.controller.log</fileNamePattern>
+      		<maxHistory>168</maxHistory>
+        </rollingPolicy>
+    </appender>
+ 	<logger name="social.network.uptempo.controller"  level="info" additivity="false">
+ 		<appender-ref ref="ROLLING2" />
+ 	</logger>
+    
+	<property name="BATCH_DIRECTORY" value="batch"/>
+    <appender name="ROLLING3" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_ABSOLUTE_PATH}/${BATCH_DIRECTORY}/batch.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/${BATCH_DIRECTORY}/%d{yyyyMM,aux}/%d{yyyy-MM-dd}.logback.log</fileNamePattern>
+      		<maxHistory>168</maxHistory>
+        </rollingPolicy>
+    </appender>
+ 	<logger name="social.network.uptempo.batch"  level="info" additivity="false">
+ 		<appender-ref ref="ROLLING3" />
+ 	</logger>
+ 	
+ 	<property name="ERROR_DIRECTORY" value="error"/>
+ 	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ 		<file>${LOGS_ABSOLUTE_PATH}/${ERROR_DIRECTORY}/error.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/${ERROR_DIRECTORY}/%d{yyyyMM,aux}/%d{yyyy-MM-dd}.logback.log</fileNamePattern>
+      		<maxHistory>168</maxHistory>
+        </rollingPolicy>
+ 	</appender>
+  	<logger name="social.network.uptempo"  level="error" additivity="false">
+ 		<appender-ref ref="ERROR" />
+ 	</logger>	
+ 	
+ 	
+   	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

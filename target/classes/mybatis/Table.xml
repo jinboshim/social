@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<!--  -->
+<mapper namespace="Table">
+
+	<!-- ######################## Table Name ######################## -->
+	
+	<sql id="sampleTab">sample</sql>
+	
+	
+	<sql id="adminGroupTab"					>admin_group</sql>
+	<sql id="adminsTab"						>admins</sql>
+	<sql id="adminsGroupMapTab"				>admins_group_map</sql>
+	<sql id="alarmHistoryTab"				>alarm_history</sql>
+	<sql id="analysisConfigTab"				>analysys_config</sql>
+	<sql id="analysisDeviceTab"				>analysys_device</sql>
+	<sql id="deviceDashboardConfigTab"		>device_dashboard_config</sql>
+	<sql id="deviceTab"						>device</sql>
+	<sql id="deviceStatusTab"			>device_status</sql>
+	<sql id="deviceRelationMapTab"			>device_relation_map</sql>
+	<sql id="generalDeviceStatusTab"		>general_device_status</sql>
+	<sql id="menu1Tab"						>menu_1</sql>
+	<sql id="menu2Tab"						>menu_2</sql>
+	<sql id="menuAuthorizationMapTab"		>menu_authorization_map</sql>
+	<sql id="monitorDeviceStatusTab"		>monitor_device_status</sql>
+	<sql id="monitorDeviceStatusHistoryTab"	>monitor_device_status_history</sql>
+	<sql id="monitorDeviceStatusMinTab"		>monitor_device_status_min</sql>
+	<sql id="monitorGroupDashboardConfigTab">monitor_group_dashboard_config</sql>
+	<sql id="monitorGroupTab"				>monitor_group</sql>
+	<sql id="monitorGroupDeviceMapTab"		>monitor_group_device_map</sql>
+	<sql id="multiviewTab"					>multiview</sql>
+	<sql id="multiviewLayoutTab"			>multiview_layout</sql>
+	<sql id="multiviewLayoutMapTab"			>multiview_layout_map</sql>
+	<sql id="multiviewLayoutViewTab"		>multiview_layout_view</sql>
+	<sql id="plpStatusTab"					>plp_status</sql>
+	<sql id="plpStatusHistoryTab"			>plp_status_history</sql>
+	<sql id="serviceTab"					>service</sql>
+	<sql id="serviceStatusTab"				>service_status</sql>
+	<sql id="serviceStatusHistoryTab"		>service_status_history</sql>
+	<sql id="systemSetTab"					>system_set</sql>
+
+	<!-- ######################## //Table Name ######################## -->
+	
+	
+	
+	
+	<!-- ######################## View Name ######################## -->
+	
+	<sql id="vDashboardAlarmHistoryTab"		>v_dashboard_alarm_history</sql>
+	<sql id="vDeviceNetworkInfoTab"			>v_device_network_info</sql>
+	
+	<!-- ######################## //View Name ######################## -->
+	
+	
+	
+	
+</mapper>

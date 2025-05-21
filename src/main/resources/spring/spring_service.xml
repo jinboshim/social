@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:cache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task		http://www.springframework.org/schema/task/spring-task.xsd
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
+		">
+		
+	<context:property-placeholder order="2" ignore-unresolvable="true" location="classpath:conf/file_upload.properties" />
+	<!-- 파일 업로드 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="${upload.default.limit.size}" />
+	</bean>
+
+
+
+<!--	
+	<context:component-scan base-package="project.impl" />
+	<context:component-scan base-package="project.data" />
+	<task:scheduled-tasks>
+		<task:scheduled ref="analysisSchedule" method="minMaxAnalysis" cron="0 10 9 * * ?" />
+	</task:scheduled-tasks>	
+	<bean id="analysisSchedule"			class="project.schedule.AnalysisSchedule"/>
+-->
+	
+			
+</beans>

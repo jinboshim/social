@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="social.network.uptempo.batch.mapper.CreatorMapper">
+	
+	<sql id="TABLENAME">tb_creator</sql>
+	<sql id="TABLENAME_CONTACT">tb_creator_contact</sql>
+	<sql id="TABLENAME_CATEGORY">tb_creator_category</sql>
+	
+    
+	<!-- Creator add -->
+    <insert id="creatorAdd" parameterType="EData">
+		INSERT INTO <include refid="TABLENAME"/>
+		(
+			ID
+			,TYPE_CD
+			,NAME
+			,NICK_NAME
+			,CREATOR_LINK
+			,REGION_CD
+			,FOLLOWER_CNT
+			,CONTACT_TYPE
+			,INSERT_ID
+			,INSERT_DATE
+			,UPDATE_ID
+			,UPDATE_DATE
+		)
+		VALUES
+		(
+			#{id}
+			,#{type_cd}
+			,#{name}
+			,#{nick_name}
+			,#{creator_link}
+			,#{region_cd}
+			,#{follower_cnt}
+			,#{contact_type}
+			,#{insert_id}
+			,NOW()
+			,#{update_id}
+			,NOW()
+		)
+		ON DUPLICATE KEY UPDATE
+			NAME = #{name}
+			,NICK_NAME = #{nick_name}
+			,REGION_CD = #{region_cd}
+			,FOLLOWER_CNT = #{follower_cnt}
+			,CONTACT_TYPE = #{contact_type}
+			,UPDATE_ID = #{update_id}
+			,UPDATE_DATE = NOW()
+    </insert>
+    
+    
+    <delete id="creatorContactRemove">
+    	DELETE FROM <include refid="TABLENAME_CONTACT"/>
+    	WHERE ID = #{id}
+    </delete>
+    
+	<!-- Creator category add -->
+    <insert id="creatorContactAdd" parameterType="EData">
+		INSERT INTO <include refid="TABLENAME_CONTACT"/>
+		(
+			ID
+			,TYPE
+			,INFO
+			,INSERT_ID
+			,INSERT_DATE
+		)
+		VALUES
+		(
+			#{id}
+			,#{type}
+			,#{info}
+			,#{insert_id}
+			,NOW()
+		)
+    </insert>
+    
+
+    <delete id="creatorCategoryRemove">
+    	DELETE FROM <include refid="TABLENAME_CATEGORY"/>
+    	WHERE ID = #{id}
+    </delete>
+    
+	<!-- Creator category add -->
+    <insert id="creatorCategoryAdd" parameterType="EData">
+		INSERT INTO <include refid="TABLENAME_CATEGORY"/>
+		(
+			ID
+			,CATEGORY_CD
+			,CATEGORY_NAME
+			,CATEGORY_VALUE
+			,INSERT_ID
+			,INSERT_DATE
+		)
+		VALUES
+		(
+			#{id}
+			,#{category_cd}
+			,#{category_name}
+			,#{category_value}
+			,#{insert_id}
+			,NOW()
+		)
+    </insert>
+    
+    
+    <select id="getContactList" parameterType="EData" resultType="EData">
+    	SELECT	ID
+    	FROM	<include refid="TABLENAME"/>
+    	WHERE	CONTACT_TYPE = 111
+    	AND		region_cd = 1001
+    	LIMIT	0, #{page_row}
+    </select>
+    
+    
+    
+    <update id="creatorContactTypeModify" parameterType="EData">
+    	UPDATE	<include refid="TABLENAME"/>
+    	SET		CONTACT_TYPE = 222
+    	WHERE	ID = #{id}
+    </update>
+    
+    
+    
+    <update id="modify" parameterType="EData">
+    	UPDATE	<include refid="TABLENAME"/>
+    	SET	
+   		<trim prefix="" prefixOverrides=",">
+   			<if test=' uniqueId != null and uniqueId != "" '>,uniqueId = #{uniqueId}</if>
+   			<if test=' nickname != null and nickname != "" '>,nickname = #{nickname}</if>
+   			<if test=' signature != null and signature != "" '>,signature = #{signature}</if>
+   			<if test=' secUid != null and secUid != "" '>,secUid = #{secUid}</if>
+   			<if test=' region != null and region != "" '>,region = #{region}</if>
+   			<if test=' language != null and language != "" '>,language = #{language}</if>
+   			<if test=' followerCount != null and followerCount != "" '>,followerCount = #{followerCount}</if>
+   			<if test=' followingCount != null and followingCount != "" '>,followingCount = #{followingCount}</if>
+   			<if test=' videoCount != null and videoCount != "" '>,videoCount = #{videoCount}</if>
+   			<if test=' email != null and email != "" '>,email = #{email}</if>
+   			<if test=' last_video_time != null and last_video_time != "" '>,last_video_time = #{last_video_time}</if>
+   			<if test=' avg_video_play_count != null and avg_video_play_count != "" '>,avg_video_play_count = #{avg_video_play_count}</if>
+   			<if test=' avg_video_digg_count != null and avg_video_digg_count != "" '>,avg_video_digg_count = #{avg_video_digg_count}</if>
+    	</trim>
+    	WHERE	ID = #{id}
+    </update>
+    
+    
+
+</mapper>
